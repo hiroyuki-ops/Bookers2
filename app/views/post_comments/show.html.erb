@@ -1,0 +1,55 @@
+<div class="container">
+	<div class="row">
+		<div class= "col-md-3">
+			<h1>User info</h1>
+            <h3 class="profile-name"><%= @user.name %></h3>
+            <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
+            <h3 class="profile-option"><%= @user.introduction %></h3>
+	        <% if @user.id == current_user.id %>
+            <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right" %></p>
+            <% end %>
+            
+            <%= form_for(@book) do |f|%>
+
+              <h4>Title</h4>
+              <%= f.text_field :title %>
+
+              <h4>Option</h4>
+              <%= f.text_field :option %>
+
+              <%= f.submit 'Create Book' %>
+
+            <% end %>
+
+		</div>
+		<div class= "col-md-9">
+			<table class="table table-striped">
+	          <%= flash[:notice] %>
+	          <h1>Books</h1>
+	          <thead>
+		        <tr aline="center">
+			      <th></th>
+			      <th>Title</th>
+			      <th>Option</th>
+		        </tr>
+	          </thead>
+	          <tbody>
+		        <% @books.each do |f| %>
+		        <tr>
+			      <td>
+				    <%= user.image %>
+			      </td>
+			      <td>
+				    <%= book.title %>
+				    <% link_to book_path(params[:id]) %>
+			      </td>
+			      <td>
+				    <%= book.option %>
+			      </td>
+		        </tr>
+		        <% end %>
+	           </tbody>
+            </table>
+		</div>
+	</div>
+</div>

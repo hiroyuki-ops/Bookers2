@@ -1,0 +1,80 @@
+<div class="container">
+	<%= flash[:success] %>
+	<div class="row">
+		<div class= "col-xs-3">
+			<h1>User info</h1>
+            <%= attachment_image_tag @user, :profile_image, size: "100x100", format: 'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg" %>
+            <table class="table">
+              <tr><td>name<td><td><%= @user.name %><td><tr>
+              <tr><td>introduction<td><td><%= @user.introduction %><td><tr>
+            </table>
+	        <% if @user == current_user %>
+              <%= link_to edit_user_path(@user), class: "btn btn-block" do %>
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+              <% end %>
+            <% else %>
+              <%= link_to user_path(current_user.id), class: "btn btn-white btn-block" do %>
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+
+            <h1>New book</h1>
+
+            <%= form_for(@booknew) do |f|%>
+            <%= render 'layouts/error_messages', model: f.object %>
+
+              <h4>Title</h4>
+              <%= f.text_field :title %>
+
+              <h4>Opinion</h4>
+              <%= f.text_field :body %>
+
+              <%= f.submit 'Create Book' ,class: "btn btn-block" %>
+
+            <% end %>
+
+		</div>
+		<div class= "col-xs-9">
+			<table class="table table-striped">
+	          <%= flash[:notice] %>
+	          <h1>Book detail</h1>
+	          <thead>
+		        <tr aline="center">
+			      <th></th>
+			      <th></th>
+			      <th></th>
+			      <th></th>
+			      <th></th>
+		        </tr>
+	          </thead>
+	          <tbody>
+		        
+		        <tr>
+			      <td>
+			      	<%= link_to user_path(@user) do %>
+				    <%= attachment_image_tag @user, :profile_image, size: "50x50", format: 'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg" %>
+				    
+				    <%= link_to @user.name, user_path(@user) %>
+				    <% end %>
+			      </td>
+			      <td>
+				    <%= link_to @book.title, book_path(params[:id]) %>
+			      </td>
+			      <td>
+				    <%= @book.body %>
+			      </td>
+			      <% if @user == current_user %>
+			        <td>
+			      	  <%= link_to "Edit", edit_book_path %>
+			        </td>
+			        <td>
+			      	  <%= link_to "Destroy", book_path, method: :delete %>
+			        </td>
+			      <% end%>
+		        </tr>
+		        
+	           </tbody>
+            </table>
+		</div>
+	</div>
+</div>
